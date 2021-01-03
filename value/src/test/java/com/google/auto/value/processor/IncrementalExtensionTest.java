@@ -21,6 +21,7 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.auto.value.extension.AutoValueExtension;
 import com.google.auto.value.extension.AutoValueExtension.IncrementalExtensionType;
 import com.google.auto.value.extension.memoized.processor.MemoizeExtension;
+import com.google.auto.value.extension.memoized.toprettystring.ToPrettyStringExtension;
 import com.google.auto.value.extension.serializable.processor.SerializableAutoValueExtension;
 import com.google.common.collect.ImmutableList;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -46,7 +47,10 @@ public class IncrementalExtensionTest {
     // different <?>.
     assertThat(builtInExtensions)
         .comparingElementsUsing(transforming(e -> (Object) e.getClass(), "is class"))
-        .containsExactly(MemoizeExtension.class, SerializableAutoValueExtension.class);
+        .containsExactly(
+            MemoizeExtension.class,
+            SerializableAutoValueExtension.class,
+            ToPrettyStringExtension.class);
 
     AutoValueProcessor processor = new AutoValueProcessor(builtInExtensions);
     assertThat(processor.getSupportedOptions())
